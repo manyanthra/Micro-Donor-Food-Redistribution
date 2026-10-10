@@ -1,0 +1,19 @@
+{
+  "name": "micro-donor-food-redistribution",
+  "version": "1.0.0",
+  "description": "24-hour hackathon prototype: Micro-Donor Food Redistribution",
+  "scripts": {
+    "dev": "concurrently -n \"SERVER,CLIENT\" -c \"blue,green\" \"npm run dev:server\" \"npm run dev:client\"",
+    "dev:server": "npm --prefix server run dev",
+    "dev:client": "npm --prefix client run dev",
+    "seed": "npm --prefix server run seed",
+    "test": "npm --prefix server test",
+    "install:all": "npm install && npm --prefix server install && npm --prefix client install"
+  },
+  "dependencies": {
+    "concurrently": "^9.1.2"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
