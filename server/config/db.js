@@ -40,7 +40,12 @@ async function disconnectDB() {
   }
 }
 
+function isUsingMemoryDB() {
+  return Boolean(mongoMemoryServer);
+}
+
 module.exports = {
   connectDB,
-  disconnectDB
+  disconnectDB,
+  isUsingMemoryDB
 };
