@@ -16,11 +16,20 @@ const { haversineKm } = require('./geo');
  * @returns {{ feasible: Array, excluded: Array }}
  */
 function filterDonations(donations = [], now = new Date(), rules = {}, ngo = null) {
+  const defaultRules = require('../config/foodRules');
+  // Handle flexible signature where 3rd param is NGO
+  let effectiveRules = rules;
+  let effectiveNgo = ngo;
+  if (rules && (rules.location || rules.nightlyCapacity) && !rules.FOOD_CATEGORIES && !rules.ROUTING_CONFIG) {
+    effectiveNgo = rules;
+    effectiveRules = defaultRules;
+  }
+
   const currentTime = now instanceof Date ? now : new Date(now);
-  const foodCategories = rules.FOOD_CATEGORIES || {};
-  const routingConfig = rules.ROUTING_CONFIG || {};
+  const foodCategories = effectiveRules.FOOD_CATEGORIES || defaultRules.FOOD_CATEGORIES || {};
+  const routingConfig = effectiveRules.ROUTING_CONFIG || defaultRules.ROUTING_CONFIG || {};
   const avgSpeedKmh = routingConfig.AVG_SPEED_KMH || 25;
-  const ngoCapacity = ngo?.nightlyCapacity || routingConfig.NGO_NIGHTLY_CAPACITY_MEALS || 100;
+  const ngoCapacity = effectiveNgo?.nightlyCapacity || routingConfig.NGO_NIGHTLY_CAPACITY_MEALS || 100;
 
   const feasible = [];
   const excluded = [];

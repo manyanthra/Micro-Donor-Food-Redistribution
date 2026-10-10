@@ -142,6 +142,7 @@ function clearCache() {
 }
 
 module.exports = {
+  haversine: haversineKm,
   haversineKm,
   getEstimatedDistance,
   getRoadDistance,
